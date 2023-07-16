@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- xmlns 는 xml namespace 의 약어. xml에서 네임스페이스 정의 위해 사용하는 속성 -->
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- XML -> ViewModel -->
+    <data>
+        <variable
+            name="viewModel"
+            type="com.jun.test02.viewmodel.ViewModel" />
+    </data>
+
+    <!-- XML -> Activity  -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.AddUserActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="명단"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
