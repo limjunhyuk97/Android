@@ -1,16 +1,22 @@
 package com.jun.test02.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.jun.test02.Component.recyclerViewAdapter;
 import com.jun.test02.R;
 import com.jun.test02.databinding.ActivityAddUserBinding;
 import com.jun.test02.databinding.ActivityMainBinding;
 import com.jun.test02.model.Database;
 import com.jun.test02.viewmodel.ViewModel;
+
+
 
 public class AddUserActivity extends AppCompatActivity {
 
@@ -18,6 +24,10 @@ public class AddUserActivity extends AppCompatActivity {
     ActivityAddUserBinding binding;
 
     ViewModel viewModel;
+
+    RecyclerView recyclerView;
+
+    recyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +42,19 @@ public class AddUserActivity extends AppCompatActivity {
         // Activity -> ViewModel
         viewModel = new ViewModel(Database.getInstance());
         binding.setViewModel(viewModel);
+
+        // 리사이클러 뷰로 데이터 보여주기
+        recyclerView = binding.recylerview;
+        adapter = new recyclerViewAdapter(this, Database.getInstance());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+
+        // 뒤로가기 버튼 추가
+        binding.backBtnview.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
     }
 }

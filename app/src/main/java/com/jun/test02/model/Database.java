@@ -31,6 +31,7 @@ public class Database {
         personList.add(new Person(2, "고현서"));
         personList.add(new Person(3, "문종민"));
         personList.add(new Person(4, "윤상현"));
+        winner = "당첨자 확인 버튼을\n눌러주세요!";
     }
 
     public static Database getInstance() {
@@ -45,6 +46,14 @@ public class Database {
         Log.d("jun", "당첨자 획득");
         winner = personList.get((int)(Math.random()*5)).getName();
         notifyChange();
+    }
+
+    public int getPersonListSize() {
+        return personList.size();
+    }
+
+    public Person getPersonInOrder(int number) {
+        return personList.get(number);
     }
 
     // databaseListener.onChanged를 호출하는 메서드
