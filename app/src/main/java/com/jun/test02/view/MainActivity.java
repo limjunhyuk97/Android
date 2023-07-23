@@ -3,9 +3,7 @@ package com.jun.test02.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -36,15 +34,12 @@ public class MainActivity extends AppCompatActivity {
         // button 클릭시 viewModel.getUser() 메서드 호출되게 정의
         binding.okBtnview.setOnClickListener(view -> {
             Log.d("jun", "버튼 클릭");
-            viewModel.getUser();
+            viewModel.updateWinner();
         });
 
         // button 클릭시 다른 회원추가 페이지로 이동
         binding.addBtnview.setOnClickListener(view -> {
-            Toast toast = Toast.makeText(this, "페이지 이동", Toast.LENGTH_SHORT);
-            toast.show();
-
-            Intent intent = new Intent(getApplicationContext(), AddUserActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ViewUserActivity.class);
             startActivity(intent);
             finish();
         });

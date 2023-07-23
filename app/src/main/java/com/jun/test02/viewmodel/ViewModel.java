@@ -26,8 +26,7 @@ public class ViewModel extends BaseObservable {
         // 의존성 주입
         this.database.setOnDatabaseListener(new Database.DatabaseListener() {
             @Override
-            public void onChanged() {
-                Log.d("jun", "리스너 실행");
+            public void onWinnerSelection() {
                 winner = database.getWinner();
 
                 // BaseObservable의 메서드 : 데이터 변경을 알리고, 데이터 바인딩을 갱신
@@ -38,12 +37,15 @@ public class ViewModel extends BaseObservable {
         });
     }
 
-    public void getUser() {
-        Log.d("jun", "db에게 user(winner)를 달라고 요청");
-        database.getUser();
+    public void updateWinner() {
+        database.updateWinner();
     }
 
-    // XML 파일에서 @{} 구문으로 데이터를 가져올 때 getter 메서드로 반드시 정의해주어야 한다.
+    public boolean AddUser(String name) {
+        return database.addUser(name);
+    }
+
+
     public String getWinner(){
         Log.d("jun", "winner 반환");
         return winner;

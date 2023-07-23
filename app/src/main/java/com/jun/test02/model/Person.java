@@ -6,8 +6,10 @@ public class Person {
     private long id;
     private String name;
 
-    public Person(long id, String name) {
-        this.id = id;
+    private static int incrementedId = 0;
+
+    public Person(String name) {
+        this.id = Person.incrementedId++;
         this.name = name;
     }
 

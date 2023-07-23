@@ -12,25 +12,22 @@ import java.util.logging.*;
 //  - getInstance()를 통해 객체가 있으면 반환하며, 없으면 생성해서 반환한다.
 public class Database {
 
-    // Database 객체 내부에 Database Class instance를 private으로 선언해 둔다. (외부에서 접근 불가능)
     private static Database instance;
 
-    // 데이터 저장되는 곳
     private ArrayList<Person> personList = new ArrayList<>();
 
-    // 그때 그때 결정되는 우승자 정보
     private String winner;
 
-    // Nested Interface를 정의하여 내부 인스턴스 생성 : 해당 인스턴스는 onChanged 메서드 호출 가능
     private DatabaseListener databaseListener;
 
+    //========= 생성자 및 팩토리
     private Database(){
         Log.d("jun", "Model인 Database 생성");
-        personList.add(new Person(0, "최민성"));
-        personList.add(new Person(1, "김해준"));
-        personList.add(new Person(2, "고현서"));
-        personList.add(new Person(3, "문종민"));
-        personList.add(new Person(4, "윤상현"));
+        personList.add(new Person("최민성"));
+        personList.add(new Person("김해준"));
+        personList.add(new Person("고현서"));
+        personList.add(new Person("문종민"));
+        personList.add(new Person("윤상현"));
         winner = "당첨자 확인 버튼을\n눌러주세요!";
     }
 
@@ -42,12 +39,21 @@ public class Database {
         return instance;
     }
 
-    public void getUser() {
+    //========= View Model 위한 메서드
+    public void updateWinner() {
         Log.d("jun", "당첨자 획득");
-        winner = personList.get((int)(Math.random()*5)).getName();
-        notifyChange();
+        winner = personList.get((int)(Math.random()*getPersonListSize())).getName();
+        if(databaseListener != null) databaseListener.onWinnerSelection();
     }
 
+    public boolean addUser(String name) {
+        Log.d("jun", "유저 추가");
+
+        Person person = new Person(name);
+        return personList.add(person);
+    }
+
+    //========= Recycler View Adapter 위한 메서드
     public int getPersonListSize() {
         return personList.size();
     }
@@ -56,27 +62,20 @@ public class Database {
         return personList.get(number);
     }
 
-    // databaseListener.onChanged를 호출하는 메서드
-    private void notifyChange() {
-        if (databaseListener != null) {
-            Log.d("jun", "Model | Data 변경 되어 notify 하라고 알림");
-            databaseListener.onChanged();
-        }
-    }
 
-    // DatabaseListener를 외부에서 정의해줄 수 있도록 해줌
+    //========= View 모델에서의 등록 위한 메서드
     public void setOnDatabaseListener(DatabaseListener databaseListener) {
         Log.d("jun", "DatabaseListener 구현 객체 참조 변수 세팅 (arg1 : " + databaseListener.getClass().getSimpleName() + ")");
         this.databaseListener = databaseListener;
     }
 
-    // winner 정보를 외부로 알림
-    public String getWinner(){
-        return winner;
+    public interface DatabaseListener {
+        void onWinnerSelection();
+
     }
 
-    // 의존성 주입으로 DatabaseListener 메서드의 내용을 받아들인다.
-    public interface DatabaseListener {
-        void onChanged();
+    //========= View 모델에서의 데이터 갱신 위한 메서드
+    public String getWinner(){
+        return winner;
     }
 }
