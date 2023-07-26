@@ -1,6 +1,7 @@
 package com.jun.test02.Component;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jun.test02.model.Database;
 import com.jun.test02.model.Person;
 import com.jun.test02.R;
+import com.jun.test02.view.UpdateUserActivity;
 
 import java.util.ArrayList;
 
@@ -73,12 +75,15 @@ public class recyclerViewAdapter extends RecyclerView.Adapter {
 
         MyViewHolder myViewHolder = (MyViewHolder)holder;
 
+        Person targetPerson = dataModels.getPersonInOrder(position);
+
         myViewHolder.textView.setText(dataModels.getPersonInOrder(position).getName());
-        myViewHolder.textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toast.makeText(context, position+"번째 텍스트 뷰 클릭", Toast.LENGTH_SHORT).show();
-            }
+
+        myViewHolder.editBtn.setOnClickListener(view -> {
+                Intent intent = new Intent(context, UpdateUserActivity.class);
+                intent.putExtra("targetName", targetPerson.getName());
+                intent.putExtra("targetId", targetPerson.getId());
+                context.startActivity(intent);
         });
 
     }

@@ -45,6 +45,7 @@ public class ViewModel extends BaseObservable {
         return database.addUser(name);
     }
 
+    public boolean UpdateUser(String name, long index) { return database.updateUser(name, index); };
 
     public String getWinner(){
         Log.d("jun", "winner 반환");

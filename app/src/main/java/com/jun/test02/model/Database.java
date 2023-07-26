@@ -53,6 +53,15 @@ public class Database {
         return personList.add(person);
     }
 
+    public boolean updateUser(String name, long index) {
+        Person target = null;
+        target = getPersonInId(index);
+        if(target == null) return false;
+
+        target.setName(name);
+        return true;
+    }
+
     //========= Recycler View Adapter 위한 메서드
     public int getPersonListSize() {
         return personList.size();
@@ -62,6 +71,16 @@ public class Database {
         return personList.get(number);
     }
 
+    public Person getPersonInId(long id) {
+        Person target = null;
+        for(Person person : personList) {
+            if(person.getId() == id) {
+                target = person;
+                break;
+            }
+        }
+        return target;
+    }
 
     //========= View 모델에서의 등록 위한 메서드
     public void setOnDatabaseListener(DatabaseListener databaseListener) {

@@ -33,17 +33,21 @@ public class AddUserActivity extends AppCompatActivity {
         viewModel = new ViewModel(Database.getInstance());
         binding.setViewModel(viewModel);
 
+        // 원위치 위한 Intent
+        Intent intent = new Intent(getApplicationContext(), ViewUserActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
         // 사용자 추가
         binding.newUserAddBtn.setOnClickListener(view -> {
             boolean successed = viewModel.AddUser(String.valueOf(binding.newUserEditText.getText()));
             Toast toast = Toast.makeText(this, successed ? binding.newUserEditText.getText() : "등록 실패", Toast.LENGTH_SHORT);
             toast.show();
+            startActivity(intent);
+            finish();
         });
 
         // 뒤로 가기
         binding.backBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), ViewUserActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         });

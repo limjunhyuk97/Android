@@ -25,6 +25,9 @@
 
         <!-- add user activity -->
         <activity android:name=".view.AddUserActivity" android:exported="false" />
+
+        <!-- update user activity -->
+        <activity android:name=".view.UpdateUserActivity" android:exported="false" />
     </application>
 
 </manifest>
